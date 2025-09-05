@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 int main(int argc, char *argv[]){
-    //
+    // get current working directory
     char cwd[1024];
     if(getcwd(cwd, sizeof(cwd)) != NULL){
         printf("Current working dir: %s\n", cwd);
@@ -16,7 +16,7 @@ int main(int argc, char *argv[]){
         perror("getcwd() error");
         return 1;
     }
-    
+
     int file = open("./file/file.txt", O_RDWR | O_CREAT, 0777);
     // check if file descriptor is valid
     if(file == -1){
