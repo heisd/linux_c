@@ -1,0 +1,5 @@
+read function is unblock 
+if only having a read function
+but
+dev/socket/pipe file is block
+common file is unblock
