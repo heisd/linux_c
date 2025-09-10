@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -12,13 +11,14 @@ int main(){
         printf("working in cwd %s\n",cwd);
     }
     // open file
-    int fd=open("../src/file/readme",O_RDWR|O_CREAT);
+    int fd=open("../src/file/readme",O_RDWR|O_CREAT,0755);
     if(fd<0){
         perror("open");
         return -1;
     }
     // copy fd
-    int newfd=dup(fd);
+    // can ponit newfd num
+    int newfd=dup2(fd,2);
     printf("fd:%d\n",fd);
     printf("newfd:%d\n",newfd);
     write(fd,"hello world",strlen("hello world"));
@@ -31,6 +31,3 @@ int main(){
     close(newfd);
     return 0;
 }
-
-
-

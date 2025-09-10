@@ -1,0 +1,5 @@
+hello my name is li
+first open
+second readdir
+last close
+liking file operator
