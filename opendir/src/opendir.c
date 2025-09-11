@@ -8,6 +8,7 @@
 #include <sys/dir.h>
 #include <dirent.h>
 #include <sys/stat.h>
+// why n=1431672496?
 int checkdir(char*path);
 int main(){
     char cwd[1024];
@@ -24,6 +25,7 @@ int checkdir(char *path){
     if(pdir==NULL){
         perror("opendir");
         return -1;
+    }
     int n=0;
     char sfullpath[1024];
     struct dirent* p=readdir(pdir);
@@ -53,5 +55,7 @@ int checkdir(char *path){
             break;
         }
     }
+    closedir(pdir);
+    return n;
 }
-}
+
