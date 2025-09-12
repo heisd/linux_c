@@ -1,0 +1,9 @@
+ps命令和kill命令
+ps -aux | grep "xxx"
+ps -ajx | grep "xxx"
+-a all 当前系统的所有进程
+-u 查看进程所有者和其他的一些信息
+-x 显示没有控制器终端的进程
+-j 列出与作业控制相关的信息
+kill -l 查看系统有哪些信号
+kill -9 pid 杀死进程

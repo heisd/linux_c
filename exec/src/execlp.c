@@ -21,13 +21,10 @@ int main(){
         printf("this is parent %d\n",getpid());
     }else if(pid==0){
         printf("this is child %d\n",getpid());
-        // 1.执行系统命令
-        // execl("/bin/ls","ls","-l",NULL);
-        // perror("execl error");
-        // 2.执行自己编写的可执行程序
-        execl("/home/li/桌面/c/exec/bin/test.exe","test.exe","hello","world",NULL);
+        // 执行系统命令--使用execlp命令直接不需要写路径
+        // 建议使用execl这样其实更能保证不会出错
+        execlp("ls","ls","-l",NULL);
         perror("execl error");
-        
     }
 }
 
