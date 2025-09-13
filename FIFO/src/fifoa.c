@@ -11,8 +11,8 @@ int main(){
         perror("open");
         return -1;
     }
-    write(fd,"hello world",strlen("hello world"));
+    // 加上\n使得可以退出这个read程序
+    write(fd,"hello world\n",strlen("hello world\n"));
+    // 
     close(fd);
-    // 使用getchar等待程序退出-保证我们使用另一个进程的时候可以成功的使用这个进程
-    getchar();
 }
