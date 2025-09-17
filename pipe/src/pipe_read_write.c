@@ -21,12 +21,14 @@ int main(){
         return -1;
     }
     // 关闭读端写数据会导致什么呢
+    // 会导致管道破裂->进程会马上死掉
     close(fd[0]);
     write(fd[1],"hello world",strlen("hello world"));
     // 关闭写端->看看读端会不会阻塞
     // 发现并不阻塞
     // 如果将下面这个关闭写端给注释掉->read函数会阻塞
     // close(fd[1]);
+    // 缓存区满了->write block
     char buf[64];
     memset(buf,0,sizeof(buf));
     int n=read(fd[0],buf,sizeof(buf));

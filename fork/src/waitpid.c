@@ -32,23 +32,31 @@ int main(){
         return -1;
     }else if(pid>0){
         printf("pid:%d\n",getpid());
+        while(1){
         int status;
         int flag=waitpid(-1,&status,WNOHANG);
+        // 没有子进程了
         if(flag==-1){
             printf("no child is living\n");
+            break;
         }else if(flag>0){
+            // 正常退出--有子进程退出的情况
             printf("wpid =:%d\n",flag);
             // 判断退出状态
-            // 常用的退出参数 WIFEXITED WEXITSTATUS
+            // 常用的退出参数 
+            // WIFEXITED WEXITSTATUS
             // WIFSIGNALED WTERMSIG
             if(WIFEXITED(status)){
                 printf("success exit,status==%d\n",WEXITSTATUS(status));
             }else if(WIFSIGNALED(status)){
                 printf("be killed by signal, signo==%d\n",WTERMSIG(status));
             }
+            // 子进程还活着
         }else if(flag==0){
             printf("option argv ==WNOHANG && child process is alive");
         }
+    }
+        sleep(100);
     }else if(pid==0){
         printf("pid =%d\t,fpid =%d\n",getpid(),getppid());
         sleep(5);

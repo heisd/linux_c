@@ -52,7 +52,7 @@ int main(){
         wait(NULL);
     }else{
         // 关闭写端
-        printf("*******");
+        printf("*******\n");
         close(fd[1]);
         char buf[1024];
         memset(buf,0,sizeof(buf));

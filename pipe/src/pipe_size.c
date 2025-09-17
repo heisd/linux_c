@@ -20,8 +20,10 @@ int main(){
         perror("pipe");
         return -1;
     }
+    // 使用下面代码或者使用ulimit -a来找管道大小 
     printf("pipe size==%ld\n",fpathconf(fd[0],_PC_PIPE_BUF));
     printf("pipe size==%ld\n",fpathconf(fd[1],_PC_PIPE_BUF));
+
     
 
     

@@ -51,7 +51,6 @@ int main(){
         execlp("grep","grep","bash",NULL);
         perror("execlp grep");
         return -1;
-     
     }
     // 我们在调用dup函数把标准输出回到终端上看看会发生什么
     // 为啥标准输出没有回来呀

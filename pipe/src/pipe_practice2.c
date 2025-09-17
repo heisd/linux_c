@@ -34,6 +34,8 @@ int main(){
         dup2(fd[1],STDOUT_FILENO);
         execlp("ps","ps""aux",NULL);
         //execlp("printf","printf","this is child1%d\n",getpid(),NULL);
+        perror("execlp ps");
+        return -1;
     }
     // 子进程2
     pid_t pid2=fork();
@@ -43,9 +45,8 @@ int main(){
         dup2(fd[0],STDIN_FILENO);
         execlp("grep","grep","bash",NULL);
         //execlp("printf","printf","this is child2%d\n",getpid(),NULL);
-        char buf[1024];
-        memset(buf,0,sizeof(buf));
-        read(fd[0],buf,sizeof(buf));
+        perror("execlp grep");
+        return -1;
     }
     close(fd[0]);
     close(fd[1]);

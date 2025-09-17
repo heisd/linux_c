@@ -17,5 +17,4 @@ int main(){
     fcntl(fd,F_SETFL,flag);
     write(fd,"hello world\n",sizeof("hello world\n"));
     return 0;
-
 }

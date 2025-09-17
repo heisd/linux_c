@@ -1,0 +1,19 @@
+FIFO命名管道可以用于没有血缘关系的
+FIFO是Linux基础文件的一种
+文件类型为p
+但是FIFO文件并没有数据块
+仅仅用来标识内核上的通道
+
+使用命令|函数来创建FIFO文件
+一般使用1
+1.命令mlfifo name
+2.函数int mkfifo(const *pathname,mode_t mode);
+
+FIFO使用open打开
+操作和普通文件类似,但是由于是队列,无法进行lseek()操作
+
+fifoa.c是写的文件
+fifob.c是读的文件
+
+先运行读的文件等待读取
+在运行写文件让文件被写入FIFO中
