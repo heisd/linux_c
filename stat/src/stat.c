@@ -14,7 +14,8 @@ int main(){
         perror("stat");
         return 0;
     }
-    printf("dev:%ld\t,size:%ld\t,uid:%d\t,gid:%d\n",st.st_dev,st.st_size,st.st_uid,st.st_gid);
+    printf("dev:%lld\t,size:%lld\t,uid:%d\t,gid:%d\n",
+           (long long)st.st_dev, (long long)st.st_size, st.st_uid, st.st_gid);
     printf("st_mode:%o\n",st.st_mode);
     printf("S_IRUSR:%o\n",S_IRUSR);
     // using S_IRUSR and st_mode is using have read permission
