@@ -25,9 +25,9 @@ int main(){
         // execl("/bin/ls","ls","-l",NULL);
         // perror("execl error");
         // 2.执行自己编写的可执行程序
-        execl("/home/li/桌面/c/exec/bin/test.exe","test.exe","hello","world",NULL);
+        // use relative path to keep this example portable
+        execl("../bin/test.exe","test.exe","hello","world",NULL);
         perror("execl error");
         
     }
 }
-

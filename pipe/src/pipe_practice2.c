@@ -32,7 +32,7 @@ int main(){
         // 子进程1->实现ps aux输入到写端
         close(fd[0]); 
         dup2(fd[1],STDOUT_FILENO);
-        execlp("ps","ps""aux",NULL);
+        execlp("ps","ps","aux",NULL);
         //execlp("printf","printf","this is child1%d\n",getpid(),NULL);
         perror("execlp ps");
         return -1;
@@ -68,7 +68,6 @@ int main(){
 
 
 }
-
 
 
 

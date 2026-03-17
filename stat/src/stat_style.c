@@ -5,7 +5,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-int main(int argc,char *argv[]){
+int main(void){
     struct stat st;
     if(stat("file/dir",&st)==-1){
         perror("stat");
@@ -21,13 +21,13 @@ int main(int argc,char *argv[]){
     // #define __S_IFLNK  0120000 /* symbolic link */
     // #define __S_IFSOCK 0140000 /* socket */
     // using stat only ponit file style if it is soft link
-    if((st.st_mode & __S_IFMT)==__S_IFREG){
+    if(S_ISREG(st.st_mode)){
         printf("user have common file\n");
     }
-    else if((st.st_mode & __S_IFMT)==__S_IFDIR){
+    else if(S_ISDIR(st.st_mode)){
         printf("user have dir file\n");
     }
-    else if((st.st_mode & __S_IFMT)==__S_IFLNK){
+    else if(S_ISLNK(st.st_mode)){
         printf("user have soft link file\n");
     }
     else{

@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Generic build outputs
+**/bin/*
+**/bin/*.exe
+**/bin/*.out
+**/*.o
+**/*.dSYM/
+
+# Library outputs
+**/lib/*.a
+**/lib/*.so
+
+# Intermediate build dirs
+**/build/*
+**/build/*.o
