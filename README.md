@@ -1,28 +1,103 @@
 # Linux C 系统编程学习
 
-记录 Linux 环境下的 C 语言与系统调用练习。每个主题目录相对独立，没有统一的全仓库构建入口。
+通过独立小程序学习 Linux 文件 I/O、目录、进程、信号和进程间通信。仓库按主题组织，源码、参考笔记与历史编译产物并存，没有一个用于构建所有内容的顶层入口。
 
-## 主题导航
+## 主题地图
 
-- [read](./read)、[io_function](./io_function)、[lseek](./lseek)：文件读写与偏移。
-- [stat](./stat)、[lstat](./lstat)、[dir](./dir)、[opendir](./opendir)：文件信息与目录操作。
-- [fork](./fork)、[exec](./exec)：进程练习。
-- [pipe](./pipe)、[FIFO](./FIFO)、[mmap](./mmap)、[sign](./sign)：进程通信、内存映射与信号。
-- [lib_make](./lib_make)、[lib_shared_make](./lib_shared_make)：库构建练习。
+| 目录 | 主要内容 |
+| --- | --- |
+| [io_function](./io_function)、[read](./read) | 文件 I/O、阻塞与非阻塞读取 |
+| [lseek](./lseek) | 文件偏移与文件大小练习 |
+| [stat](./stat)、[lstat](./lstat) | 文件元信息与符号链接 |
+| [dir](./dir)、[opendir](./opendir)、[cwd](./cwd) | 目录操作与当前工作目录 |
+| [dup](./dup)、[fcntl](./fcntl) | 文件描述符复制与控制 |
+| [fork](./fork) | 创建进程、等待、孤儿与僵尸进程 |
+| [exec](./exec) | 程序替换 |
+| [pipe](./pipe)、[FIFO](./FIFO) | 匿名管道与命名管道 |
+| [mmap](./mmap) | 文件与匿名内存映射 |
+| [sign](./sign) | 信号操作，目录名保留原写法 |
+| [lib_make](./lib_make)、[lib_shared_make](./lib_shared_make) | 静态/共享库练习 |
+| [calcuator](./calcuator) | 多文件计算器练习，目录名保留原拼写 |
+| [perror](./perror)、[test](./test) | 错误输出与编译过程实验 |
 
-## 目录约定
+## 环境
 
-各主题按需设置 `src/`（源码）、`bin/`（可执行文件）、`build/`（Makefile）、`read/`（笔记）、`include/`（头文件）与 `lib/`（库）。并非每个主题都包含这些目录。
-
-## 编译与运行
-
-需要 Linux 或 WSL，以及 GCC；有 Makefile 的示例还需要 Make。进入所选主题的 `src/` 后编译对应源文件，例如：
+需要 Linux 或可运行 Linux 系统调用的 WSL 环境，以及 GCC。部分主题涉及 Make、库链接或多个进程。Windows 上的原生 MinGW 不能直接等价替代这里的 Linux 系统调用环境。
 
 ```bash
-gcc source.c -o demo
-./demo
+git clone --branch main https://github.com/heisd/linux_c.git
+cd linux_c
+gcc --version
 ```
 
-将 `source.c` 替换为实际文件名；部分例子需要多个源文件或额外链接参数，以主题内说明为准。若主题提供 `build/Makefile`，可进入该目录执行 `make`。
+仓库中的 `bin/` 和扩展名为 `.exe` 的文件可能来自原环境，建议阅读源码后在本机重新编译，不能依赖扩展名判断可运行平台。
 
-这些是独立的学习代码，建议阅读源码后逐个运行。
+## 各主题的目录约定
+
+| 名称 | 常见用途 |
+| --- | --- |
+| src/ | 源码与部分相对路径资源 |
+| bin/ | 历史可执行文件或输出位置 |
+| read/、readme、readme.md | 学习说明 |
+| include/ | 头文件 |
+| lib/ | 库文件 |
+| build/ | 某些示例的构建配置 |
+
+这是一种学习时的组织习惯，并非每个主题都完整遵守。先看当前主题的实际文件，再确定编译和运行目录。
+
+## 第一个例子：fork
+
+[源码](./fork/src/fork.c) 根据 `fork()` 返回值区分父子进程，打印 PID，并在两个执行流中继续执行 fork 后的代码。
+
+```bash
+cd fork/src
+gcc fork.c -o fork_demo
+./fork_demo
+```
+
+预期能看到父进程与子进程的标识，fork 后的输出分别出现在两个进程中。进程调度会影响输出先后，不应把一次运行的行顺序当作固定保证。
+
+## 第二个例子：pipe
+
+从仓库根目录进入管道示例：
+
+```bash
+cd pipe/src
+gcc pipe.c -o pipe_demo
+./pipe_demo
+```
+
+管道通过文件描述符区分读端与写端，再结合 fork 完成父子进程通信。其他示例进一步演示阻塞、读写与管道行为。
+
+两个例子都是单文件编译方式。遇到跨文件工程，需要明确加入源文件、头文件路径和链接选项，不能机械套用 `gcc source.c`。
+
+## 工作目录与构建注意
+
+许多示例使用相对路径打开数据文件，从何处启动会影响读取目标。遇到文件不存在时，先检查程序打印的当前目录及源码中的路径。
+
+有真实 Make 规则的目录才可执行 `make`。例如 `calcuator/makefile` 当前主要是注释说明，不能因为文件名存在就认为它已定义可执行构建目标。
+
+文件映射、FIFO 或多进程示例可能需要准备文件或多个终端；按各主题笔记完成前置条件。
+
+## 推荐学习顺序
+
+1. 文件 I/O、错误处理与工作目录。
+2. 文件偏移、属性、描述符和目录遍历。
+3. fork、wait 与 exec。
+4. pipe / FIFO 的读写与阻塞行为。
+5. mmap、信号与库构建。
+
+每一步可先预测输出，再运行比较，并观察返回值与错误信息，避免只记录成功路径。
+
+## 常见问题
+
+| 现象 | 排查方向 |
+| --- | --- |
+| 缺少 unistd.h 等头文件 | 当前是否使用 Linux/WSL 的开发环境 |
+| 文件存在却提示打不开 | 相对路径、权限和启动目录 |
+| 程序等待不退出 | 是否在等待输入、另一个进程或管道另一端 |
+| 输出顺序每次不同 | 检查进程调度和缓冲，不先假定代码执行顺序错误 |
+| make 没有目标 | 检查文件是否真的包含构建规则 |
+| 链接时找不到符号 | 多文件源列表、库顺序和所需链接参数 |
+
+本仓库记录学习过程，源码注释中的系统参数或经验值不应视为对所有 Linux 环境的保证。
