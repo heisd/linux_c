@@ -1,30 +1,28 @@
-# linux开发环境的c语言代码
+# Linux C 系统编程学习
 
-## 代码是本人在学习c语言尝试在linux下学习的一个仓库
-## 把我们学到的linux相关的操作全部写在我的这个仓库里面
-### 文件夹类型
-### 函数名称
-#### src
-本文的源代码
-#### bin
-本文的可执行程序
-#### build
-本文的makefile文件夹，但是由于本文都是对linux某一个功能的实现就没有那么多的makefile文件
-#### read
-本文的参考文档，前面由于我的vscode没有办法输入中文，我就写了英文的参考文档，os本人英语水平有限且看且珍惜
-#### include
-本文的头文件文档，和build文件夹一样都很少去使用
-#### lib
-库文件所在文档
+记录 Linux 环境下的 C 语言与系统调用练习。每个主题目录相对独立，没有统一的全仓库构建入口。
 
-### 编译代码
-一般可以使用
-cd 函数名称/src 
-gcc -o ../bin/源文件.exe 源文件名.c
-如果build文件夹下有东西我们可以使用make命令（注意在build目录下）
+## 主题导航
 
-### 运行代码
-cd 函数名称/bin
-./源文件.exe
+- [read](./read)、[io_function](./io_function)、[lseek](./lseek)：文件读写与偏移。
+- [stat](./stat)、[lstat](./lstat)、[dir](./dir)、[opendir](./opendir)：文件信息与目录操作。
+- [fork](./fork)、[exec](./exec)：进程练习。
+- [pipe](./pipe)、[FIFO](./FIFO)、[mmap](./mmap)、[sign](./sign)：进程通信、内存映射与信号。
+- [lib_make](./lib_make)、[lib_shared_make](./lib_shared_make)：库构建练习。
 
+## 目录约定
 
+各主题按需设置 `src/`（源码）、`bin/`（可执行文件）、`build/`（Makefile）、`read/`（笔记）、`include/`（头文件）与 `lib/`（库）。并非每个主题都包含这些目录。
+
+## 编译与运行
+
+需要 Linux 或 WSL，以及 GCC；有 Makefile 的示例还需要 Make。进入所选主题的 `src/` 后编译对应源文件，例如：
+
+```bash
+gcc source.c -o demo
+./demo
+```
+
+将 `source.c` 替换为实际文件名；部分例子需要多个源文件或额外链接参数，以主题内说明为准。若主题提供 `build/Makefile`，可进入该目录执行 `make`。
+
+这些是独立的学习代码，建议阅读源码后逐个运行。
